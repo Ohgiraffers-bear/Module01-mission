@@ -19,7 +19,7 @@ jobs:
       - name: Code Review GPT
         uses: mattzcarey/code-review-gpt@v0.1.8
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.BEAR_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           MODEL: "gpt-4o"
           REVIEW_LANGUAGE: "English"
