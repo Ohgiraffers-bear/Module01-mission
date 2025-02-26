@@ -1,4 +1,4 @@
-name: Java CI with Gradle and ChatGPT Review (Auto PR Review)
+name: Java CI with Gradle and ChatGPT Review (PAT 지원)
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
 
 permissions:
   contents: read
-  pull-requests: write  # ✅ PR에 코멘트 작성 권한 부여
+  pull-requests: write
 
 jobs:
   build:
@@ -42,7 +42,7 @@ jobs:
       - name: Code Review with ChatGPT
         uses: anc95/ChatGPT-CodeReview@main
         env:
-          GITHUB_TOKEN: ${{ github.token }}              # ✅ GitHub 기본 제공 토큰 사용
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}  # ✅ OpenAI API 키 참조
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}  # ✅ 개인 액세스 토큰 참조
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}      # ✅ OpenAI API 키 참조
           LANGUAGE: Korean
           MODEL: gpt-3.5-turbo
