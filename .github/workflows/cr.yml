@@ -6,7 +6,7 @@ on:
 
 permissions:
   contents: read
-  pull-requests: write  # ✅ PR에 코멘트를 남길 권한
+  pull-requests: write  # ✅ PR에 코멘트를 남길 권한 명시
 
 jobs:
   build:
@@ -39,10 +39,11 @@ jobs:
         with:
           fetch-depth: 0
 
+      # ✅ Probot 요구사항 충족: 모든 입력값을 env를 통해 전달
       - name: Code Review with ChatGPT
         uses: anc95/ChatGPT-CodeReview@main
-        with:   # ✅ Probot 요구사항 충족
-          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}  # ✅ with로 토큰 전달
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          LANGUAGE: Korean
-          MODEL: gpt-3.5-turbo
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}  # ✅ 개인 액세스 토큰 참조
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}      # ✅ OpenAI API 키 참조
+          LANGUAGE: Korean                                   # ✅ 한국어 코드 리뷰
+          MODEL: gpt-3.5-turbo                               # ✅ GPT 모델 (필요 시 gpt-4)
