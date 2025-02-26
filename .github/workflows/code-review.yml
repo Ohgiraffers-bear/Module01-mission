@@ -35,15 +35,14 @@ jobs:
     needs: build
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
-      - name: Run ChatGPT Code Review
-        uses: anc95/ChatGPT-CodeReview@main
-        env:
+      - name: Code Review GPT
+        uses: mattzcarey/code-review-gpt@v0.1.8
+        with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          LANGUAGE: Korean
-          MODEL: gpt-3.5-turbo
+          MODEL: "gpt-4o"
+          REVIEW_LANGUAGE: "Korean"
