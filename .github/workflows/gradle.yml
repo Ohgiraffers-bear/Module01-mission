@@ -55,7 +55,9 @@ jobs:
       # ✅ GPT 코드 리뷰 단계 (버전 최신화: v0.8.0)
       - name: Code Review with GPT
         uses: mattzcarey/code-review-gpt@v0.8.0
-        with:
+        env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+        with:
           MODEL: 'gpt-3.5-turbo'  # 필요 시 'gpt-4'로 변경
