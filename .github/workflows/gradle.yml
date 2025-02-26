@@ -43,7 +43,7 @@ jobs:
 
     # GPT 코드 리뷰 단계
     - name: Code Review with GPT
-      uses: mattzcarey/code-review-gpt@v0.3.5-alpha
+      uses: mattzcarey/code-review-gpt@v0.6.0
       with:
         OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
