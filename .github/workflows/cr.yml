@@ -1,4 +1,4 @@
-name: Java CI with Gradle and ChatGPT Review (Auto PR Review)
+name: Java CI with Gradle and ChatGPT Review (Probot-Compatible)
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
 
 permissions:
   contents: read
-  pull-requests: write  # ✅ PR에 코멘트 작성 권한 부여
+  pull-requests: write  # ✅ PR에 코멘트를 남길 권한
 
 jobs:
   build:
@@ -41,8 +41,8 @@ jobs:
 
       - name: Code Review with ChatGPT
         uses: anc95/ChatGPT-CodeReview@main
-        env:
-          GITHUB_TOKEN: ${{ github.token }}              # ✅ GitHub 기본 제공 토큰 사용
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}  # ✅ OpenAI API 키 참조
+        with:   # ✅ Probot 요구사항 충족
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}  # ✅ with로 토큰 전달
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           LANGUAGE: Korean
           MODEL: gpt-3.5-turbo
