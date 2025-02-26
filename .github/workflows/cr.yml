@@ -49,8 +49,8 @@ jobs:
 
       # ✅ GPT 코드 리뷰 단계 - GITHUB_TOKEN과 OPENAI_API_KEY 참조 방식 수정
       - name: Code Review with GPT
-        uses: mattzcarey/code-review-gpt@v0.8.0
-        with:
+        uses: anc95/ChatGPT-CodeReview@main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          GITHUB_TOKEN: ${{ github.token }}  # 기본 제공 토큰 사용
-          MODEL: 'gpt-3.5-turbo'
+          LANGUAGE: Korean
