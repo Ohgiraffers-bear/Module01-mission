@@ -1,62 +1,48 @@
-# Java CI with Gradle and ChatGPT Code Review (Auto PR Review)
-name: Java CI with Gradle and ChatGPT Review
+name: Java CI with Gradle and ChatGPT Review (Auto PR Review)
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened]  # ✅ PR 생성/업데이트/재오픈 시 자동 실행
+    types: [opened, synchronize, reopened]
 
 permissions:
   contents: read
-  pull-requests: write  # ✅ PR에 코멘트를 남기기 위한 권한
+  pull-requests: write  # ✅ PR에 코멘트 작성 권한 부여
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      # ✅ 전체 Git 히스토리 가져오기 (PR 참조 오류 방지)
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      # ✅ JDK 21 설정
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
           java-version: '21'
           distribution: 'temurin'
 
-      # ✅ Gradle 설정
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
+        uses: gradle/actions/setup-gradle@v4.0.0
 
-      # ✅ gradlew 실행 권한 부여
       - name: Grant execute permission for Gradlew
         run: chmod +x gradlew
 
-      # ✅ Gradle 빌드
       - name: Build with Gradle Wrapper
         run: ./gradlew build
 
-      # ✅ Gradle 테스트 실행 (테스트 자동 검증)
-      - name: Run tests with Gradle
-        run: ./gradlew test
-
   code-review:
     runs-on: ubuntu-latest
-    needs: build  # ✅ 빌드 성공 후 리뷰 실행
-
+    needs: build
     steps:
-      # ✅ Git 히스토리 가져오기 (리뷰 시 git diff 참조 오류 방지)
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      # ✅ ChatGPT 기반 자동 코드 리뷰 (PR 생성 시 자동 코멘트 등록)
       - name: Code Review with ChatGPT
         uses: anc95/ChatGPT-CodeReview@main
         env:
-          GITHUB_TOKEN: ${{ github.token }}           # ✅ GitHub 제공 기본 토큰
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }} # ✅ OpenAI API 키 (Secrets에 등록 필요)
-          LANGUAGE: Korean                            # ✅ 한국어로 코드 리뷰 결과 제공
-          MODEL: gpt-3.5-turbo                        # ✅ GPT 모델 (필요 시 gpt-4로 변경 가능)
+          GITHUB_TOKEN: ${{ github.token }}              # ✅ GitHub 기본 제공 토큰 사용
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}  # ✅ OpenAI API 키 참조
+          LANGUAGE: Korean
+          MODEL: gpt-3.5-turbo
